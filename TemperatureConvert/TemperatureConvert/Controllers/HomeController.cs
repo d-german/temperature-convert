@@ -15,7 +15,28 @@ namespace TemperatureConvert.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new TemperatureConversionViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Index(TemperatureConversionViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.FromTemperature == TemperatureUnit.Fahrenheit)
+                {
+                    model = model with { Celsius = (model.Fahrenheit - 32) * 5 / 9};
+                }
+                else
+                {
+                    model = model with
+                    {
+                        Fahrenheit = (model.Celsius * 9.0 / 5.0) + 32
+                    };
+                }
+            }
+
+            return View("Index", model);
         }
 
         public IActionResult Privacy()

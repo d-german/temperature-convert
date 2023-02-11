@@ -1,8 +1,36 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model TemperatureConversionViewModel
+
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Temperature Conversion</h1>
 </div>
+
+<form asp-controller="Home" asp-action="Index" method="post">
+    <div class="form-group">
+        <label for="Celsius">Celsius:</label>
+        <input type="text" class="form-control" id="Celsius" name="Celsius" value="@Model.Celsius" />
+    </div>
+    <div class="form-group">
+        <label for="Fahrenheit">Fahrenheit:</label>
+        <input type="text" class="form-control" id="Fahrenheit" name="Fahrenheit" value="@Model.Fahrenheit" />
+    </div>
+    <input type="hidden" id="FromTemperature" name="FromTemperature" value="@Model.FromTemperature" />
+    <input type="hidden" id="ToTemperature" name="ToTemperature" value="@Model.ToTemperature" />
+    <button type="submit" class="btn btn-primary">Convert</button>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#Fahrenheit").on("change", function () {
+            alert("Fahrenheit");
+            $("#FromTemperature").val("Fahrenheit");
+            $("#ToTemperature").val("Celsius");
+        });
+
+        $("#Celsius").on("change", function () {
+            $("#FromTemperature").val("Celsius");
+            $("#ToTemperature").val("Fahrenheit");
+        });
+    });
+</script>
+
